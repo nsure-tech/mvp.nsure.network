@@ -1,25 +1,23 @@
 <template>
-    <div class="header" :class="{ home: $route.path === '/'}">
+    <div class="header">
         <div class="pages-wrapper header-wrapper">
             <div class="logon-wrapper" @click="home">
                 <img src="@/assets/images/logo@2x.png" width="40" alt="">
                 <span>Nsure.Network</span>
             </div>
             <div class="right-wrapper">
-                <div v-if="$route.path === '/'" class="right-list">
+                <!-- <div v-if="$route.path === '/'" class="right-list">
                     <div class="right-list-item">
                         Whitepaper
-                        <!-- <a href="https://github.com/nsure-tech/" target="_blank" rel="">Whitepaper</a> -->
                     </div>
                     <div class="right-list-item">
-                        FAQ
-                        <!-- <a href="https://github.com/nsure-tech/" target="_blank" rel="">FAQ</a> -->
+                        <router-link to="/faq">FAQ</router-link>
                     </div>
                     <div class="right-list-item last">
-                        <div class="last-item" @click="goInsure">Text Network </div>
+                        <a href="https://buy.nsure.network/#/" class="last-item" rel="">Text Network</a>
                     </div>
-                </div>
-                <ul class="nav-list" v-else>
+                </div> -->
+                <ul class="nav-list">
                     <li>
                         <router-link to="/insure">Insure</router-link>
                     </li>
@@ -129,6 +127,7 @@ export default {
             }
 
             .last-item {
+                display: block;
                 cursor: pointer;
                 width: 148px;
                 height: 48px;
