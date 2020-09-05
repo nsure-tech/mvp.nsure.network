@@ -1,22 +1,13 @@
 <template>
     <div class="header">
         <div class="pages-wrapper header-wrapper">
-            <div class="logon-wrapper" @click="home">
-                <img src="@/assets/images/logo@2x.png" width="40" alt="">
-                <span>Nsure.Network</span>
+            <div class="logon-wrapper">
+                <a href="https://nsure.network/#/">
+                    <img src="@/assets/images/logo@2x.png" width="40" alt="">
+                    <span>Nsure.Network</span>
+                </a>
             </div>
             <div class="right-wrapper">
-                <!-- <div v-if="$route.path === '/'" class="right-list">
-                    <div class="right-list-item">
-                        Whitepaper
-                    </div>
-                    <div class="right-list-item">
-                        <router-link to="/faq">FAQ</router-link>
-                    </div>
-                    <div class="right-list-item last">
-                        <a href="https://buy.nsure.network/#/" class="last-item" rel="">Text Network</a>
-                    </div>
-                </div> -->
                 <ul class="nav-list">
                     <li>
                         <router-link to="/insure">Insure</router-link>
@@ -78,20 +69,8 @@ export default {
 <style lang="less" scoped>
 .header {
     height: 80px;
+    font-weight: bold;
     background-color: #fff;
-
-    &.home {
-        background-color: #1B2532;
-        padding: 0 20px;
-
-        span {
-            color: #fff;
-        }
-
-        .pages-wrapper {
-            width: 100%;
-        }
-    }
 
     .header-wrapper {
         height: 80px;
@@ -101,12 +80,16 @@ export default {
     }
 
     .logon-wrapper {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-
-        img {
-            margin-right: 20px;
+        a {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: #000;
+    
+            img {
+                margin-right: 20px;
+            }
         }
     }
 

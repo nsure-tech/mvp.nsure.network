@@ -59,8 +59,12 @@ export default {
 
 
 <style lang="less">
+@font-face {
+  font-family: Open Sans;
+  src:url('./assets/font/OpenSans-Regular.ttf')
+}
 #app {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Microsoft YaHei, Apple Color Emoji, Segoe UI Emoji;
+  font-family: Open Sans,Avenir,Helvetica,Arial,sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #000;
