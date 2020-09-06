@@ -1,15 +1,15 @@
 const DOMAIN_CONFIG = {
     // 开发
     dev: {
-        common: 'https://test.goomtu.com',
+        common: 'https://api.nsure.network', // https://test.goomtu.com
     },
     // 测试
     test: {
-        common: 'https://test.goomtu.com',
+        common: 'https://api.nsure.network',
     },
     // 正式
     prod: {
-        common: 'https://test.goomtu.com',
+        common: 'https://api.nsure.network',
     }
 };
 
