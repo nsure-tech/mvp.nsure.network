@@ -44,7 +44,7 @@ const getProviderList = (params) => {
 }
 
 /** 
- * 获取投保用户地址分页列表
+ * 获取保单分页列表
  * @param {keywords}  
  * @param {page}  
 */

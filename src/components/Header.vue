@@ -127,7 +127,7 @@ export default {
 
         li {
             font-size: 14px;
-            margin-left: 20px;
+            margin-left: 30px;
 
             a {
                 color: #000;

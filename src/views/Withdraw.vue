@@ -5,7 +5,7 @@
         <el-card class="box-card">
           <div class="home-card-item">
             <div class="home-button">
-              <span :class="{active: type === 'ETH'}" @click="handle('ETH')">Capital reward(eth)</span>
+              <span :class="{active: type === 'ETH'}" @click="handle('ETH')">Capital reward(nsure)</span>
               <span :class="{active: type === 'NSURE'}" @click="handle('NSURE')">Liquidity mining reward(nsure)</span>
             </div>
             <div class="home-card-content">
@@ -53,7 +53,7 @@
                         <td>{{item.address}}</td>
                     </tr>
                 </table>
-                <div class="no-data" v-if="historyList.length === 0">No Data</div>
+                <div class="no-data" v-if="historyList.length === 0">Under development</div>
             </div>
           </div>
         </el-card>
@@ -160,7 +160,8 @@ export default {
         const tolalReward = await this.makerBalanceOf()
         const earned = await this.makerBalanceOf(this.account)
         this.nsure.tolalReward = this.web3.utils.fromWei(tolalReward)
-        this.nsure.earned = this.web3.utils.fromWei(earned)
+        const nsure_earned = this.web3.utils.fromWei(earned)
+        this.nsure.earned = Number(nsure_earned).toFixed(4)
       }catch(e){
         console.log(e)
       }

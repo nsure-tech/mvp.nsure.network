@@ -1,7 +1,7 @@
 const DOMAIN_CONFIG = {
     // 开发
     dev: {
-        common: 'http://120.79.189.25:9502',
+        common: 'https://test.goomtu.com',
     },
     // 测试
     test: {

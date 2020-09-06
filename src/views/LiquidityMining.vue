@@ -120,11 +120,12 @@
                             <th>Time</th>
                             <th>Direction</th>
                             <th>Token Amount</th>
-                            <th>Tx hash</th>
+                            <th>Address</th>
                         </tr>
                         <tr v-for="(item, index) in historyList" :key="index">
                             <td>{{item.create_time}}</td>
-                            <td>{{item.desc}}</td>
+                            <td v-if="item.tran_type === 1">Deposit</td>
+                            <td v-if="item.tran_type === 2">Withdraw</td>
                             <td>{{item.amount}}</td>
                             <td>{{item.address}}</td>
                         </tr>

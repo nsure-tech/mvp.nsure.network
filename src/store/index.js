@@ -141,6 +141,17 @@ export default new Vuex.Store({
         return Promise.reject(e)
       }
     },
+    // insuranceOrders
+    async insuranceOrders({ state }, payload) {
+      try {
+        const { web3 } = state
+        const myContract = new web3.eth.Contract(nsureAbi, nsureToken);
+        const result = await myContract.methods.insuranceOrders(payload).call()
+        return Promise.resolve(result)
+      } catch (e) {
+        return Promise.reject(e)
+      }
+    },
     // 获取分红
     async getDividends({ state }) {
       try {
