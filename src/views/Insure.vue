@@ -116,14 +116,14 @@
                         <tr>
                             <!-- <th>Product Name</th> -->
                             <th>Cover Amount</th>
-                            <th>Cover Period</th>
+                            <!-- <th>Cover Period</th> -->
                             <th>Address</th>
                             <th>Time</th>
                         </tr>
                         <tr v-for="(item, index) in historyList" :key="index">
-                            <!-- <td>{{item.record_sn}}</td> -->
+                            <!-- <td>{{item.product_info.product_name}}</td> -->
                             <td>{{item.amount}}</td>
-                            <td>{{item.totalProviders}}</td>
+                            <!-- <td>{{item.blocks}}</td> -->
                             <td>{{item.address}}</td>
                             <td>{{item.create_time}}</td>
                         </tr>
@@ -133,16 +133,16 @@
                 <div class="histpry-table" v-else>
                     <table>
                         <tr>
-                            <!-- <th>Product Name</th> -->
+                            <th>Product Name</th>
                             <th>Cover Amount</th>
                             <th>Cover Period</th>
                             <th>Address</th>
                             <th>Time</th>
                         </tr>
                         <tr v-for="(item, index) in orderList" :key="index">
-                            <!-- <td>{{item.record_sn}}</td> -->
+                            <td>{{item.product_info.product_name}}</td>
                             <td>{{item.premium}}</td>
-                            <td>{{item.totalProviders}}</td>
+                            <td>{{item.blocks}}</td>
                             <td>{{item.buyer}}</td>
                             <td>{{item.create_time}}</td>
                         </tr>
@@ -394,17 +394,17 @@ export default {
                 console.log(historyList)
                 this.historyList = historyList
                 this.total = res.total
-                const promises = []
-                this.historyList.map(i => {
-                    promises.push(this.insuranceOrders(i.address))
-                    res.map((item, index) => {
-                        historyList[index] = {...historyList[index], totalProviders: item.totalProviders}
-                    })
-                    this.historyList = historyList
-                })
-                Promise.all(promises).then(res => {
-                    console.log(res)
-                })
+                // const promises = []
+                // this.historyList.map(i => {
+                //     promises.push(this.insuranceOrders(i.address))
+                // })
+                // Promise.all(promises).then(res => {
+                //     res.map((item, index) => {
+                //         historyList[index] = {...historyList[index], totalProviders: item.totalProviders, blocks: item.blocks}
+                //     })
+                //     this.historyList = historyList
+                //     console.log(historyList)
+                // })
             }catch(e){
                 throw Error(e)
             }
@@ -424,18 +424,19 @@ export default {
                 })
                 this.orderList = orderList
                 this.orderListTotal = res.total
-                const promises = []
-                this.orderList.map(i => {
-                    promises.push(this.insuranceOrders(i.order_sn))
-                })
-                Promise.all(promises).then(res => {
-                    console.log(res)
-                    res.map((item, index) => {
-                        orderList[index] = {...orderList[index], buyer: item.buyer, totalProviders: item.totalProviders}
-                    })
-                    this.orderList = orderList
-                    console.log(orderList)
-                })
+                console.log(orderList)
+                // const promises = []
+                // this.orderList.map(i => {
+                //     promises.push(this.insuranceOrders(i.order_sn))
+                // })
+                // Promise.all(promises).then(res => {
+                //     console.log(res)
+                //     res.map((item, index) => {
+                //         orderList[index] = {...orderList[index], buyer: item.buyer, totalProviders: item.totalProviders, blocks: item.blocks, product_addr: item.product_addr}
+                //     })
+                //     this.orderList = orderList
+                //     console.log(orderList)
+                // })
             }catch(e){
                 throw Error(e)
             }
