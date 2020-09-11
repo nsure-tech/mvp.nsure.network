@@ -5,13 +5,13 @@
         <el-card class="box-card">
           <div class="home-card-item">
             <div class="home-button">
-              <span :class="{active: type === 'ETH'}" @click="handle('ETH')">Capital reward(nsure)</span>
-              <span :class="{active: type === 'NSURE'}" @click="handle('NSURE')">Liquidity mining reward(nsure)</span>
+              <span :class="{active: type === 'ETH'}" @click="handle('ETH')">Capital reward(Nsure)</span>
+              <span :class="{active: type === 'NSURE'}" @click="handle('NSURE')">Liquidity mining reward(Nsure)</span>
             </div>
             <div class="home-card-content">
               <ul class="content-list" v-if="type === 'ETH'">
                 <li>
-                  <span>Tolal Reward：</span>
+                  <span>Total Reward：</span>
                   <span>{{eth.tolalReward}}</span>
                 </li>
                 <li>
@@ -21,7 +21,7 @@
               </ul>
               <ul class="content-list" v-else>
                 <li>
-                  <span>Tolal Reward：</span>
+                  <span>Total Reward：</span>
                   <span>{{nsure.tolalReward}}</span>
                 </li>
                 <li>
@@ -150,7 +150,8 @@ export default {
         const tolalReward = await this.takerBalanceOf()
         const earned = await this.takerBalanceOf(this.account)
         this.eth.tolalReward = this.web3.utils.fromWei(tolalReward)
-        this.eth.earned = this.web3.utils.fromWei(earned)
+        const eth_earned = this.web3.utils.fromWei(earned)
+        this.eth.earned = Number(eth_earned).toFixed(4)
       }catch(e){
         console.log(e)
       }

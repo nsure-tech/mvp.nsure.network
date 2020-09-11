@@ -81,7 +81,7 @@
                     <span>Cover period</span>
                 </div>
                 <div class="description height-80">
-                    <p>Enter the length of time you want to be covered forCover is live immediately from the purchasetransaction confirmation.</p>
+                    <p>Enter the length of time you want to be covered for. Cover is live immediately from the purchase transaction confirmation.</p>
                 </div>
 
                 <div class="input-wrapper">
@@ -114,17 +114,17 @@
                 <div class="histpry-table" v-if="active">
                     <table>
                         <tr>
-                            <!-- <th>Product Name</th> -->
+                            <th>Product Name</th>
                             <th>Cover Amount</th>
-                            <!-- <th>Cover Period</th> -->
+                            <th>Cover Period</th>
                             <th>Address</th>
                             <th>Time</th>
                         </tr>
                         <tr v-for="(item, index) in historyList" :key="index">
-                            <!-- <td>{{item.product_info.product_name}}</td> -->
-                            <td>{{item.amount}}</td>
-                            <!-- <td>{{item.blocks}}</td> -->
-                            <td>{{item.address}}</td>
+                            <td>{{item.product_info.product_name}}</td>
+                            <td>{{item.premium}}</td>
+                            <td>{{item.blocks}}</td>
+                            <td>{{item.buyer}}</td>
                             <td>{{item.create_time}}</td>
                         </tr>
                     </table>
@@ -378,13 +378,15 @@ export default {
         },
         async getRecords() {
             try{
-                const params = {
-                    address: this.productAddr,
-                    tran_type: 0,
-                    record_type: 0,
-                    page: this.page
-                }
-                const res = await this.$http.getRecords(params)
+                // const params = {
+                //     address: this.productAddr,
+                //     tran_type: 0,
+                //     record_type: 0,
+                //     page: this.page
+                // }
+                // const res = await this.$http.getRecords(params)
+
+                const res = await this.$http.getOrderList({ page: this.page })
                 const historyList = []
                 res.data.map((item, index) => {
                     if (index < 10) {
@@ -451,7 +453,7 @@ export default {
 }
 
 .description {
-    width: 50%;
+    width: 70%;
     margin-bottom: 40px;
 
     p {
