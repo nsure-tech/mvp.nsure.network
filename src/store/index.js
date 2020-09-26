@@ -1,21 +1,57 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Web3 from 'web3'
+import { Message } from 'element-ui'
 import erc20TokenContractAbi from 'human-standard-token-abi'
 import Apis from '@/request/index'
 import { nsureToken, stakingToken, nsrToken } from '@/config'
 const web3 = new Web3(Web3.givenProvider);
+const ethereum = window.ethereum || undefined
 
 const nsureAbi = require('@/config/nsureAbi.json')
 const nsureTokenAbi = require('@/config/nsureTokenAbi.json')
 const stakingAbi = require('@/config/stakingAbi.json')
+
+const RINKEBY_NETWORK_ID = 4
+const RINKEBY_NETWORK_TIPS = 'Please switch to Rinkeby network!'
+
+if (ethereum) {
+  web3.eth.net.getId().then((chainId) => {
+    console.log({ chainId })
+    if (chainId !== RINKEBY_NETWORK_ID) {
+      Message.warning(RINKEBY_NETWORK_TIPS)
+    }
+    ethereum.on('chainChanged', (_chainId) => {
+      const chainChangedId = Number(_chainId, 10)
+      console.log(chainId, chainChangedId)
+      window.location.reload();
+    })
+  })
+} else {
+  Message.error('Please install Metamask!')
+}
+
+const getChainId = async () => {
+  try {
+    const chainId = await web3.eth.net.getId()
+    console.log({ chainId })
+    if (chainId === RINKEBY_NETWORK_ID) {
+      return Promise.resolve({ chainId })
+    } else {
+      Message.error(RINKEBY_NETWORK_TIPS)
+      return Promise.reject(JSON.stringify({ chainId, msg: RINKEBY_NETWORK_TIPS, code: 10000 }))
+    }
+  } catch (error) {
+    throw Error(error)
+  }
+}
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     web3,
-    ethereum: window.ethereum || undefined,
+    ethereum,
     dialogVisible: false,
     account: '',
     balance: 0
@@ -75,6 +111,7 @@ export default new Vuex.Store({
     // 投保
     async buyInsurance({ state }, payload) {
       try {
+        await getChainId()
         console.log(payload)
         const { web3, account } = state
         const { cost, productAddr, amount, blocks, ipAddrs, ipAmount } = payload
@@ -90,6 +127,7 @@ export default new Vuex.Store({
     },
     async addLiquidityEth({ state }, value) {
       try {
+        await getChainId()
         const { web3, account } = state
         const myContract = new web3.eth.Contract(nsureAbi, nsureToken);
         // const estimateGas = await myContract.methods.addLiquidityEth().estimateGas({
@@ -109,6 +147,7 @@ export default new Vuex.Store({
     },
     async withdrawLiquidity({ state }, value) {
       try {
+        await getChainId()
         const { web3, account } = state
         const myContract = new web3.eth.Contract(nsureAbi, nsureToken);
         const result = await myContract.methods.withdrawLiquidity(value).send({
@@ -155,6 +194,7 @@ export default new Vuex.Store({
     // 获取分红
     async getDividends({ state }) {
       try {
+        await getChainId()
         const { web3, account } = state
         const myContract = new web3.eth.Contract(stakingAbi, stakingToken);
         const result = await myContract.methods.getDividends().send({
@@ -169,6 +209,7 @@ export default new Vuex.Store({
     // 预授权
     async setApprove({ state, dispatch }, value) {
       try {
+        await getChainId()
         const { web3, account } = state
         const erc20TokenContract = new web3.eth.Contract(erc20TokenContractAbi, nsrToken);
         // const estimateGas = await erc20TokenContract.methods.approve(stakingToken, value).estimateGas({
@@ -187,12 +228,9 @@ export default new Vuex.Store({
     // 抵押
     async staking({ state }, value) {
       try {
+        await getChainId()
         const { web3, account } = state
         const myContract = new web3.eth.Contract(stakingAbi, stakingToken);
-        // const estimateGas = await myContract.methods.staking(value).estimateGas({
-        //   from: account
-        // })
-        // console.log({ estimateGas })
         const result = await myContract.methods.staking(value).send({
           from: account
         })
@@ -205,6 +243,7 @@ export default new Vuex.Store({
     // 第一次提现
     async submitWithdrawProposal({ state }, value) {
       try {
+        await getChainId()
         const { web3, account } = state
         const myContract = new web3.eth.Contract(stakingAbi, stakingToken);
         const result = await myContract.methods.submitWithdrawProposal(value).send({
@@ -219,6 +258,7 @@ export default new Vuex.Store({
     // 第二次提现，需要隔21天
     async doWithdraw({ state }) {
       try {
+        await getChainId()
         const { web3, account } = state
         const myContract = new web3.eth.Contract(stakingAbi, stakingToken);
         const result = await myContract.methods.doWithdraw().send({
@@ -297,6 +337,7 @@ export default new Vuex.Store({
     // 带参数表示提现金额，不带参数表示提现所有
     async takerWithdraw({ state }, value) {
       try {
+        await getChainId()
         const { web3, account } = state
         const myContract = new web3.eth.Contract(nsureTokenAbi, nsrToken);
         const result = await myContract.methods.takerWithdraw(value).send({
@@ -331,6 +372,7 @@ export default new Vuex.Store({
     // 带参数表示提现金额，不带参数表示提现所有
     async makerWithdraw({ state }) {
       try {
+        await getChainId()
         const { web3, account } = state
         const myContract = new web3.eth.Contract(nsureTokenAbi, nsrToken);
         const result = await myContract.methods.makerWithdraw().send({
