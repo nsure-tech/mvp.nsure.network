@@ -32,4 +32,4 @@ jobs:
       with:
         ACCESS_TOKEN: ${{ secrets.NSURE_WEBSITE_SECRET }}
         BRANCH: gh-pages
-        FOLDER: dist
+        FOLDER: dist/prod
